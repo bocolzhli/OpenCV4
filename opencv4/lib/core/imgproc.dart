@@ -610,6 +610,21 @@ class ImgProc {
     return result;
   }
 
+  /// Function takes input file's byte array data, depth of the output matrix & size of the kernel box.
+  static Future<dynamic> filter2DV2(
+      Uint8List byteData, int outputDepth, List<int> kernelSize, List<double> kernelData) async {
+    /// Variable to store operation result
+    final dynamic result = await _channel.invokeMethod('filter2DV2', {
+      'byteData': byteData,
+      'outputDepth': outputDepth,
+      'kernelSize': kernelSize,
+      'kernelData': kernelData,
+    });
+
+    /// Function returns the response from method channel
+    return result;
+  }
+
   /// Function takes input file's byte array data & size of the kernel box.
   static Future<dynamic> dilate(
       Uint8List byteData, List<int> kernelSize) async {

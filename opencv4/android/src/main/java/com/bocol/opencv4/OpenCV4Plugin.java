@@ -91,6 +91,10 @@ public class OpenCV4Plugin implements FlutterPlugin, MethodCallHandler {
         result.success(core.filter2D((byte[]) call.argument("byteData"), (int) call.argument("outputDepth"),
                 (ArrayList) call.argument("kernelSize")));
         break;
+      case "filter2DV2":
+        result.success(core.filter2DV2((byte[]) call.argument("byteData"), (int) call.argument("outputDepth"),
+                (ArrayList) call.argument("kernelSize"), (ArrayList) call.argument("kernelData")));
+        break;
       case "dilate":
         result.success(
                 core.dilate((byte[]) call.argument("byteData"), (ArrayList) call.argument("kernelSize")));

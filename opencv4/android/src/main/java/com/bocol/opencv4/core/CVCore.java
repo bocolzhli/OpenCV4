@@ -18,6 +18,7 @@ import org.opencv.imgproc.Imgproc;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.lang.Math;
 
 import androidx.annotation.NonNull;
 import io.flutter.Log;
@@ -217,6 +218,41 @@ public class CVCore {
                     kernel.put(i, j, m);
                 }
             }
+            // Convert the image to Gray
+            Imgproc.filter2D(src, dst, outputDepth, kernel);
+
+            // instantiating an empty MatOfByte class
+            MatOfByte matOfByte = new MatOfByte();
+            // Converting the Mat object to MatOfByte
+            Imgcodecs.imencode(".jpg", dst, matOfByte);
+            byteArray = matOfByte.toArray();
+        } catch (Exception e) {
+            System.out.println("OpenCV Error: " + e.toString());
+        }
+        return byteArray;
+    }
+
+    @SuppressLint("MissingPermission")
+    public byte[] filter2DV2(byte[] byteData, int outputDepth, ArrayList kernelSize, ArrayList kernelData) {
+        byte[] byteArray = new byte[0];
+        try {
+            Mat dst = new Mat();
+            // Decode image from input byte array
+            Mat src = Imgcodecs.imdecode(new MatOfByte(byteData), Imgcodecs.IMREAD_UNCHANGED);
+
+            // Creating kernel matrix
+            Mat kernel = Mat.ones((int) kernelSize.get(0), (int) kernelSize.get(1), CvType.CV_32F);
+            for (int i = 0; i < kernel.rows(); i++) {
+                for (int j = 0; j < kernel.cols(); j++) {
+                    double m = (double)kernelData.get(i*kernel.rows()+j);
+
+//                    for (int k = 1; k < m.length; k++) {
+//                        m[k] = m[k] / (2 * 2);
+//                    }
+                    kernel.put(i, j, m);
+                }
+            }
+
             // Convert the image to Gray
             Imgproc.filter2D(src, dst, outputDepth, kernel);
 
