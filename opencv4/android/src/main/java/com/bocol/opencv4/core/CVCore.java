@@ -6,6 +6,7 @@ import org.opencv.android.OpenCVLoader;
 import org.opencv.core.Core;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
+import org.opencv.core.MatOfPoint;
 import org.opencv.core.Point;
 import org.opencv.core.Rect;
 import org.opencv.core.Scalar;
@@ -17,8 +18,11 @@ import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.imgproc.Imgproc;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.lang.Math;
+import java.util.Random;
 
 import androidx.annotation.NonNull;
 import io.flutter.Log;
@@ -84,13 +88,23 @@ public class CVCore {
     public byte[] gaussianBlur(byte[] byteData, ArrayList kernelSize, double sigmaX) {
         byte[] byteArray = new byte[0];
         try {
+            gaussianBlur(byteData, kernelSize, sigmaX, 0.0);
+        }catch (Exception e) {
+            System.out.println("OpenCV Error: " + e.toString());
+        }
+        return byteArray;
+    }
+    @SuppressLint("MissingPermission")
+    public byte[] gaussianBlur(byte[] byteData, ArrayList kernelSize, double sigmaX, double sigmaY) {
+        byte[] byteArray = new byte[0];
+        try {
             Mat dst = new Mat();
             // Decode image from input byte array
             Mat src = Imgcodecs.imdecode(new MatOfByte(byteData), Imgcodecs.IMREAD_UNCHANGED);
 
             Size size = new Size((double) kernelSize.get(0), (double) kernelSize.get(1));
             // Convert the image to Gray
-            Imgproc.GaussianBlur(src, dst, size, sigmaX);
+            Imgproc.GaussianBlur(src, dst, size, sigmaX, sigmaY);
 
             // instantiating an empty MatOfByte class
             MatOfByte matOfByte = new MatOfByte();
@@ -233,7 +247,7 @@ public class CVCore {
     }
 
     @SuppressLint("MissingPermission")
-    public byte[] filter2DV2(byte[] byteData, int outputDepth, ArrayList kernelSize, ArrayList kernelData) {
+    public byte[] filter2DV2(byte[] byteData, int outputDepth, ArrayList kernelSize, ArrayList kernelData, ArrayList anchor, double delta) {
         byte[] byteArray = new byte[0];
         try {
             Mat dst = new Mat();
@@ -245,16 +259,43 @@ public class CVCore {
             for (int i = 0; i < kernel.rows(); i++) {
                 for (int j = 0; j < kernel.cols(); j++) {
                     double m = (double)kernelData.get(i*kernel.rows()+j);
-
-//                    for (int k = 1; k < m.length; k++) {
-//                        m[k] = m[k] / (2 * 2);
-//                    }
                     kernel.put(i, j, m);
                 }
             }
 
-            // Convert the image to Gray
-            Imgproc.filter2D(src, dst, outputDepth, kernel);
+            Point _anchor = new Point((double)anchor.get(0), (double)anchor.get(1));
+            Imgproc.filter2D(src, dst, outputDepth, kernel, _anchor, delta);
+
+            /*
+            double minR=300.0, minG=300.0, minB=300.0, maxR=0.0, maxG=0.0, maxB=0.0;
+            for(int i = 0; i<dst.rows(); i++) {
+                for(int j = 0; j<dst.cols(); j++) {
+                    double[] rgb = dst.get(i, j);
+
+                    if(minR > rgb[0]) { minR = rgb[0];}
+                    if(maxR < rgb[0]) { maxR = rgb[0];}
+                    if(minG > rgb[1]) { minG = rgb[1];}
+                    if(maxG < rgb[1]) { maxG = rgb[1];}
+                    if(minB > rgb[2]) { minB = rgb[2];}
+                    if(maxB < rgb[2]) { maxB = rgb[2];}
+                }
+            }
+            for(int i = 0; i<dst.rows(); i++) {
+                for(int j = 0; j<dst.cols(); j++) {
+                    double[] rgb = dst.get(i, j);
+
+                    rgb[0] = 255.0 * (rgb[0] - minR) / (maxR - minR);
+                    rgb[1] = 255.0 + 128.0 * (rgb[1] - minG) / (maxG - minG);
+                    rgb[2] = 255.0 + 128.0 * (rgb[2] - minB) / (maxB - minB);
+
+                    int Gray = (((int)rgb[0])*38 + ((int)rgb[0]*75) + ((int)rgb[0]*15)) >> 7;
+                    rgb[0] = rgb[1] = rgb[2] = Gray;
+
+                    dst.put(i, j, rgb);
+                }
+            }
+            System.out.println("min max is [" + minR + "," + maxR + "],[" + minG + "," + maxG + "],[" + minB +"," + maxB + "]");
+            */
 
             // instantiating an empty MatOfByte class
             MatOfByte matOfByte = new MatOfByte();
@@ -535,6 +576,107 @@ public class CVCore {
         }
         return byteArray;
     }
+    @SuppressLint("MissingPermission")
+    public byte[] scharrV2(byte[] byteData, int depth, int dx, int dy) {
+        byte[] byteArray = new byte[0];
+        try {
+            // Decode image from input byte array
+            Mat src = Imgcodecs.imdecode(new MatOfByte(byteData), Imgcodecs.IMREAD_UNCHANGED);
+            Mat dst0 = new Mat();
+            src.convertTo(dst0, CvType.CV_32F);//Mat to be accumulateWeighted must be of type CV_32F
+
+            // Scharr operation
+            Mat dst1 = new Mat();
+            Imgproc.Scharr(dst0, dst1, depth, dx, 0);
+
+            Mat dst2 = new Mat();
+            Imgproc.Scharr(dst0, dst2, depth, 0, dy);
+
+            Imgproc.accumulateWeighted(dst1, dst2, 0.5);
+
+            // instantiating an empty MatOfByte class
+            MatOfByte matOfByte = new MatOfByte();
+            // Converting the Mat object to MatOfByte
+            Imgcodecs.imencode(".jpg", dst2, matOfByte);
+            byteArray = matOfByte.toArray();
+        } catch (Exception e) {
+            System.out.println("OpenCV Error: " + e.toString());
+        }
+        return byteArray;
+    }
+    public byte[] scharrV3(byte[] byteData, int depth, int dx, int dy) {
+        byte[] byteArray = new byte[0];
+        try {
+            // Decode image from input byte array
+            Mat src = Imgcodecs.imdecode(new MatOfByte(byteData), Imgcodecs.IMREAD_UNCHANGED);
+
+            //gray styled
+            Mat grayMat = new Mat();
+            Imgproc.cvtColor(src, grayMat, Imgproc.COLOR_RGB2GRAY);
+
+
+            //blur
+            Mat blurMat = new Mat();
+            Imgproc.blur(grayMat, blurMat, new Size(3, 3));
+//            Imgproc.GaussianBlur(grayMat, blurMat, new Size(0.0, 0.0), 5.0, 0.0);
+            Mat cannyMat = new Mat();
+//            Imgproc.Canny(src, cannyMat, 100.0, 300.0, 3);
+            Imgproc.Canny(blurMat, cannyMat, 100, 300);
+
+
+            // Scharr operation
+//            Mat CV32FMat = new Mat();
+//            grayMat.convertTo(CV32FMat, CvType.CV_32F);//Mat to be accumulateWeighted must be of type CV_32F
+//            Mat scharrMat1 = new Mat();
+//            Imgproc.Scharr(CV32FMat, scharrMat1, depth, dx, 0);
+//            Mat scharrMat2 = new Mat();
+//            Imgproc.Scharr(CV32FMat, scharrMat2, depth, 0, dy);
+//            Imgproc.accumulateWeighted(scharrMat1, scharrMat2, 0.5);
+
+            //find contours
+            List<MatOfPoint> contours = new ArrayList<MatOfPoint>();
+            Mat hierarchy = new Mat();
+            Mat contourMap = new Mat();
+            cannyMat.convertTo(contourMap, CvType.CV_8UC1);
+            Imgproc.findContours(contourMap, contours, hierarchy, dx/*Imgproc.RETR_CCOMP*/, dy/*Imgproc.CHAIN_APPROX_NONE*/);
+            System.out.println("contour size is " + contours.size());
+            Mat drawMat = new Mat();
+            src.convertTo(drawMat, CvType.CV_32FC3);
+
+            ArrayList<Integer> indices = new ArrayList<Integer>(contours.size());
+            System.out.println("hierarchy is " + hierarchy.toString());
+            for(int i = 0; i < contours.size(); i++) {
+                double area = Imgproc.contourArea(contours.get(i));
+                if(area>1.0) {
+                    indices.add(i);
+
+                    System.out.println("hierarchy " + i + " is [" + hierarchy.get(0, i)[0]
+                            + "," + hierarchy.get(0, i)[1] + "," + hierarchy.get(0, i)[2]
+                            + "," + hierarchy.get(0, i)[3] + "]");
+                    System.out.println("Contour area is [" + area + "]");
+                }
+//                if(true || Math.floor(hierarchy.get(0, i)[0]) == -1) {
+//                    indices.add(i);
+//                }
+            }
+            for(int i = 0; i < indices.size(); i++) {
+                Random random = new Random(Calendar.getInstance().getTimeInMillis());
+                Imgproc.drawContours(drawMat, contours, indices.get(i), new Scalar(random.nextInt(255)
+                        , random.nextInt(255), random.nextInt(255), 0.0), 2
+                , -1, hierarchy, 0);
+            }
+
+            Mat outImage = drawMat;
+            // instantiating an empty MatOfByte class
+            MatOfByte matOfByte = new MatOfByte();
+            // Converting the Mat object to MatOfByte
+            Imgcodecs.imencode(".jpg", outImage, matOfByte);
+            byteArray = matOfByte.toArray();
+        } catch (Exception e) {
+            System.out.println("OpenCV Error: " + e.toString());
+        }
+        return byteArray;
+    }
 
     @SuppressLint("MissingPermission")
     public byte[] laplacian(byte[] byteData, int depth) {
@@ -546,6 +688,28 @@ public class CVCore {
 
             // Laplacian operation
             Imgproc.Laplacian(src, dst, depth);
+
+            // instantiating an empty MatOfByte class
+            MatOfByte matOfByte = new MatOfByte();
+            // Converting the Mat object to MatOfByte
+            Imgcodecs.imencode(".jpg", dst, matOfByte);
+            byteArray = matOfByte.toArray();
+        } catch (Exception e) {
+            System.out.println("OpenCV Error: " + e.toString());
+        }
+        return byteArray;
+    }
+
+    @SuppressLint("MissingPermission")
+    public byte[] laplacianV2(byte[] byteData, int depth, int ksize, double scale, double delta, int borderType) {
+        byte[] byteArray = new byte[0];
+        try {
+            Mat dst = new Mat();
+            // Decode image from input byte array
+            Mat src = Imgcodecs.imdecode(new MatOfByte(byteData), Imgcodecs.IMREAD_UNCHANGED);
+
+            // Laplacian operation
+            Imgproc.Laplacian(src, dst, depth, ksize, scale, delta, borderType);
 
             // instantiating an empty MatOfByte class
             MatOfByte matOfByte = new MatOfByte();

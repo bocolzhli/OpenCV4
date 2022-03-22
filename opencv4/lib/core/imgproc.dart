@@ -533,6 +533,15 @@ class ImgProc {
     /// Function returns the response from method channel
     return result;
   }
+  static Future<dynamic> gaussianBlurV2(
+      Uint8List byteData, List<double> kernelSize, double sigmaX, double sigmaY) async {
+    /// Variable to store operation result
+    final dynamic result = await _channel.invokeMethod('gaussianBlurV2',
+        {'byteData': byteData, 'kernelSize': kernelSize, 'sigmaX': sigmaX, 'sigmaY': sigmaY});
+
+    /// Function returns the response from method channel
+    return result;
+  }
 
   /// Function takes input file's byte array data & size of the kernel box.
   static Future<dynamic> medianBlur(Uint8List byteData, int kernelSize) async {
@@ -612,13 +621,16 @@ class ImgProc {
 
   /// Function takes input file's byte array data, depth of the output matrix & size of the kernel box.
   static Future<dynamic> filter2DV2(
-      Uint8List byteData, int outputDepth, List<int> kernelSize, List<double> kernelData) async {
+      Uint8List byteData, int outputDepth, List<int> kernelSize,
+      List<double> kernelData, List<double> anchor, double delta) async {
     /// Variable to store operation result
     final dynamic result = await _channel.invokeMethod('filter2DV2', {
       'byteData': byteData,
       'outputDepth': outputDepth,
       'kernelSize': kernelSize,
       'kernelData': kernelData,
+      'anchor': anchor,
+      'delta': delta,
     });
 
     /// Function returns the response from method channel
@@ -778,12 +790,38 @@ class ImgProc {
     /// Function returns the response from method channel
     return result;
   }
+  static Future<dynamic> scharrV2(
+      Uint8List byteData, int depth, int dx, int dy) async {
+    /// Variable to store operation result
+    final dynamic result = await _channel.invokeMethod(
+        'scharrV2', {'byteData': byteData, 'depth': depth, 'dx': dx, 'dy': dy});
+
+    /// Function returns the response from method channel
+    return result;
+  }
+  static Future<dynamic> scharrV3(
+      Uint8List byteData, int depth, int dx, int dy) async {
+    /// Variable to store operation result
+    final dynamic result = await _channel.invokeMethod(
+        'scharrV3', {'byteData': byteData, 'depth': depth, 'dx': dx, 'dy': dy});
+
+    /// Function returns the response from method channel
+    return result;
+  }
 
   /// Function takes input file's byte array data & depth of destination image.
   static Future<dynamic> laplacian(Uint8List byteData, int depth) async {
     /// Variable to store operation result
     final dynamic result = await _channel
         .invokeMethod('laplacian', {'byteData': byteData, 'depth': depth});
+
+    /// Function returns the response from method channel
+    return result;
+  }
+  static Future<dynamic> laplacianV2(Uint8List byteData, int depth, int ksize, double scale, double delta, int borderType) async {
+    /// Variable to store operation result
+    final dynamic result = await _channel
+        .invokeMethod('laplacianV2', {'byteData': byteData, 'depth': depth, 'ksize': ksize, 'scale': scale, 'delta': delta, 'borderType': borderType});
 
     /// Function returns the response from method channel
     return result;

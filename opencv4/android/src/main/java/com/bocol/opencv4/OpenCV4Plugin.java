@@ -70,6 +70,10 @@ public class OpenCV4Plugin implements FlutterPlugin, MethodCallHandler {
         result.success(core.gaussianBlur((byte[]) call.argument("byteData"),
                 (ArrayList) call.argument("kernelSize"), (double) call.argument("sigmaX")));
         break;
+      case "gaussianBlurV2":
+        result.success(core.gaussianBlur((byte[]) call.argument("byteData"),
+                (ArrayList) call.argument("kernelSize"), (double) call.argument("sigmaX"), (double) call.argument("sigmaY")));
+        break;
       case "medianBlur":
         result.success(core.medianBlur((byte[]) call.argument("byteData"), (int) call.argument("kernelSize")));
         break;
@@ -93,7 +97,8 @@ public class OpenCV4Plugin implements FlutterPlugin, MethodCallHandler {
         break;
       case "filter2DV2":
         result.success(core.filter2DV2((byte[]) call.argument("byteData"), (int) call.argument("outputDepth"),
-                (ArrayList) call.argument("kernelSize"), (ArrayList) call.argument("kernelData")));
+                (ArrayList) call.argument("kernelSize"), (ArrayList) call.argument("kernelData"),
+                (ArrayList) call.argument("anchor"), (double) call.argument("delta")));
         break;
       case "dilate":
         result.success(
@@ -142,8 +147,21 @@ public class OpenCV4Plugin implements FlutterPlugin, MethodCallHandler {
         result.success(core.scharr((byte[]) call.argument("byteData"), (int) call.argument("depth"),
                 (int) call.argument("dx"), (int) call.argument("dy")));
         break;
+      case "scharrV2":
+        result.success(core.scharrV2((byte[]) call.argument("byteData"), (int) call.argument("depth"),
+                (int) call.argument("dx"), (int) call.argument("dy")));
+        break;
+      case "scharrV3":
+        result.success(core.scharrV3((byte[]) call.argument("byteData"), (int) call.argument("depth"),
+                (int) call.argument("dx"), (int) call.argument("dy")));
+        break;
       case "laplacian":
         result.success(core.laplacian((byte[]) call.argument("byteData"), (int) call.argument("depth")));
+        break;
+      case "laplacianV2":
+        result.success(core.laplacianV2((byte[]) call.argument("byteData"), (int) call.argument("depth"),
+                (int) call.argument("ksize"), (double) call.argument("scale"), (double) call.argument("delta"),
+                (int) call.argument("borderType")));
         break;
       case "distanceTransform":
         result.success(core.distanceTransform((byte[]) call.argument("byteData"),
