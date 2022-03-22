@@ -6,6 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="f27ca453-8e2e-4728-83e2-399a1ce8253a" name="Default Changelist" comment="project creation">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/opencv4/android/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/opencv4/android/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/opencv4/android/src/main/java/com/bocol/opencv4/OpenCV4Plugin.java" beforeDir="false" afterPath="$PROJECT_DIR$/opencv4/android/src/main/java/com/bocol/opencv4/OpenCV4Plugin.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/opencv4/android/src/main/java/com/bocol/opencv4/core/CVCore.java" beforeDir="false" afterPath="$PROJECT_DIR$/opencv4/android/src/main/java/com/bocol/opencv4/core/CVCore.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/opencv4/lib/core/imgproc.dart" beforeDir="false" afterPath="$PROJECT_DIR$/opencv4/lib/core/imgproc.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -58,11 +62,11 @@
     <property name="com.intellij.openapi.externalSystem.service.settings.ExternalSystemGroupConfigurable" value="ALL" />
     <property name="dart.analysis.tool.window.visible" value="false" />
     <property name="io.flutter.reload.alreadyRun" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../bocol_flutter_helloworld" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/opencv4/android" />
     <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.10090816" />
     <property name="project.structure.side.proportion" value="0.112359524" />
-    <property name="settings.editor.selected.configurable" value="preferences.keymap" />
+    <property name="settings.editor.selected.configurable" value="flutter.settings" />
     <property name="show.migrate.to.gradle.popup" value="false" />
   </component>
   <component name="ReaderModeSettings">
@@ -102,7 +106,14 @@
       <option name="project" value="LOCAL" />
       <updated>1647655285787</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="project creation">
+      <created>1647655835654</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1647655835654</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
