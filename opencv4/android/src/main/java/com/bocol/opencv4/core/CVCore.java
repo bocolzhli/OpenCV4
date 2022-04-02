@@ -44,7 +44,7 @@ public class CVCore {
         try {
             Mat dst = new Mat();
             // Decode image from input byte array
-            Mat src = Imgcodecs.imdecode(new MatOfByte(byteData), Imgcodecs.IMREAD_UNCHANGED);
+            Mat src = Imgcodecs.imdecode(new MatOfByte(byteData), Imgcodecs.IMREAD_ANYCOLOR | Imgcodecs.IMREAD_ANYDEPTH);
 
             // Convert the image color
             Imgproc.cvtColor(src, dst, outputType);
@@ -66,7 +66,11 @@ public class CVCore {
         try {
             Mat dst = new Mat();
             // Decode image from input byte array
-            Mat src = Imgcodecs.imdecode(new MatOfByte(byteData), Imgcodecs.IMREAD_UNCHANGED);
+            Mat src = Imgcodecs.imdecode(
+                    new MatOfByte(byteData),
+//                    Imgcodecs.IMREAD_UNCHANGED
+                    Imgcodecs.IMREAD_ANYCOLOR | Imgcodecs.IMREAD_ANYDEPTH
+            );
 
             Size size = new Size((double) kernelSize.get(0), (double) kernelSize.get(1));
             Point point = new Point((double) anchorPoint.get(0), (double) anchorPoint.get(1));
@@ -100,7 +104,7 @@ public class CVCore {
         try {
             Mat dst = new Mat();
             // Decode image from input byte array
-            Mat src = Imgcodecs.imdecode(new MatOfByte(byteData), Imgcodecs.IMREAD_UNCHANGED);
+            Mat src = Imgcodecs.imdecode(new MatOfByte(byteData), Imgcodecs.IMREAD_ANYCOLOR | Imgcodecs.IMREAD_ANYDEPTH);
 
             Size size = new Size((double) kernelSize.get(0), (double) kernelSize.get(1));
             // Convert the image to Gray
@@ -123,7 +127,7 @@ public class CVCore {
         try {
             Mat dst = new Mat();
             // Decode image from input byte array
-            Mat src = Imgcodecs.imdecode(new MatOfByte(byteData), Imgcodecs.IMREAD_UNCHANGED);
+            Mat src = Imgcodecs.imdecode(new MatOfByte(byteData), Imgcodecs.IMREAD_ANYCOLOR | Imgcodecs.IMREAD_ANYDEPTH);
 
             // Convert the image to Gray
             Imgproc.medianBlur(src, dst, kernelSize);
@@ -145,7 +149,7 @@ public class CVCore {
         try {
             Mat dst = new Mat();
             // Decode image from input byte array
-            Mat src = Imgcodecs.imdecode(new MatOfByte(byteData), Imgcodecs.IMREAD_UNCHANGED);
+            Mat src = Imgcodecs.imdecode(new MatOfByte(byteData), Imgcodecs.IMREAD_ANYCOLOR | Imgcodecs.IMREAD_ANYDEPTH);
 
             // Convert the image to Gray
             Imgproc.bilateralFilter(src, dst, diameter, sigmaColor, sigmaSpace, borderType);
@@ -168,7 +172,7 @@ public class CVCore {
         try {
             Mat dst = new Mat();
             // Decode image from input byte array
-            Mat src = Imgcodecs.imdecode(new MatOfByte(byteData), Imgcodecs.IMREAD_UNCHANGED);
+            Mat src = Imgcodecs.imdecode(new MatOfByte(byteData), Imgcodecs.IMREAD_ANYCOLOR | Imgcodecs.IMREAD_ANYDEPTH);
 
             Size size = new Size((double) kernelSize.get(0), (double) kernelSize.get(1));
             Point point = new Point((double) anchorPoint.get(0), (double) anchorPoint.get(1));
@@ -193,7 +197,7 @@ public class CVCore {
         try {
             Mat dst = new Mat();
             // Decode image from input byte array
-            Mat src = Imgcodecs.imdecode(new MatOfByte(byteData), Imgcodecs.IMREAD_UNCHANGED);
+            Mat src = Imgcodecs.imdecode(new MatOfByte(byteData), Imgcodecs.IMREAD_ANYCOLOR | Imgcodecs.IMREAD_ANYDEPTH);
 
             Size size = new Size((double) kernelSize.get(0), (double) kernelSize.get(1));
 
@@ -217,7 +221,7 @@ public class CVCore {
         try {
             Mat dst = new Mat();
             // Decode image from input byte array
-            Mat src = Imgcodecs.imdecode(new MatOfByte(byteData), Imgcodecs.IMREAD_UNCHANGED);
+            Mat src = Imgcodecs.imdecode(new MatOfByte(byteData), Imgcodecs.IMREAD_ANYCOLOR | Imgcodecs.IMREAD_ANYDEPTH);
 
             // Creating kernel matrix
             Mat kernel = Mat.ones((int) kernelSize.get(0), (int) kernelSize.get(1), CvType.CV_32F);
@@ -252,7 +256,7 @@ public class CVCore {
         try {
             Mat dst = new Mat();
             // Decode image from input byte array
-            Mat src = Imgcodecs.imdecode(new MatOfByte(byteData), Imgcodecs.IMREAD_UNCHANGED);
+            Mat src = Imgcodecs.imdecode(new MatOfByte(byteData), Imgcodecs.IMREAD_ANYCOLOR | Imgcodecs.IMREAD_ANYDEPTH);
 
             // Creating kernel matrix
             Mat kernel = Mat.ones((int) kernelSize.get(0), (int) kernelSize.get(1), CvType.CV_32F);
@@ -314,7 +318,7 @@ public class CVCore {
         try {
             Mat dst = new Mat();
             // Decode image from input byte array
-            Mat src = Imgcodecs.imdecode(new MatOfByte(byteData), Imgcodecs.IMREAD_UNCHANGED);
+            Mat src = Imgcodecs.imdecode(new MatOfByte(byteData), Imgcodecs.IMREAD_ANYCOLOR | Imgcodecs.IMREAD_ANYDEPTH);
 
             // Preparing the kernel matrix object
             Mat kernel = Imgproc.getStructuringElement(Imgproc.MORPH_RECT,
@@ -341,7 +345,7 @@ public class CVCore {
         try {
             Mat dst = new Mat();
             // Decode image from input byte array
-            Mat src = Imgcodecs.imdecode(new MatOfByte(byteData), Imgcodecs.IMREAD_UNCHANGED);
+            Mat src = Imgcodecs.imdecode(new MatOfByte(byteData), Imgcodecs.IMREAD_ANYCOLOR | Imgcodecs.IMREAD_ANYDEPTH);
 
             // Preparing the kernel matrix object
             Mat kernel = Imgproc.getStructuringElement(Imgproc.MORPH_RECT,
@@ -368,7 +372,7 @@ public class CVCore {
         try {
             Mat dst = new Mat();
             // Decode image from input byte array
-            Mat src = Imgcodecs.imdecode(new MatOfByte(byteData), Imgcodecs.IMREAD_UNCHANGED);
+            Mat src = Imgcodecs.imdecode(new MatOfByte(byteData), Imgcodecs.IMREAD_ANYCOLOR | Imgcodecs.IMREAD_ANYDEPTH);
 
             // Creating kernel matrix
             Mat kernel = Mat.ones((int) kernelSize.get(0), (int) kernelSize.get(0), CvType.CV_32F);
@@ -393,7 +397,7 @@ public class CVCore {
         try {
             Mat dst = new Mat();
             // Decode image from input byte array
-            Mat src = Imgcodecs.imdecode(new MatOfByte(byteData), Imgcodecs.IMREAD_UNCHANGED);
+            Mat src = Imgcodecs.imdecode(new MatOfByte(byteData), Imgcodecs.IMREAD_ANYCOLOR | Imgcodecs.IMREAD_ANYDEPTH);
 
             // Size of the new image
             Size size = new Size((int) kernelSize.get(0), (int) kernelSize.get(1));
@@ -418,7 +422,7 @@ public class CVCore {
         try {
             Mat dst = new Mat();
             // Decode image from input byte array
-            Mat src = Imgcodecs.imdecode(new MatOfByte(byteData), Imgcodecs.IMREAD_UNCHANGED);
+            Mat src = Imgcodecs.imdecode(new MatOfByte(byteData), Imgcodecs.IMREAD_ANYCOLOR | Imgcodecs.IMREAD_ANYDEPTH);
 
             // Size of the new image
             Size size = new Size((int) kernelSize.get(0), (int) kernelSize.get(1));
@@ -443,7 +447,7 @@ public class CVCore {
         try {
             Mat dst = new Mat();
             // Decode image from input byte array
-            Mat src = Imgcodecs.imdecode(new MatOfByte(byteData), Imgcodecs.IMREAD_UNCHANGED);
+            Mat src = Imgcodecs.imdecode(new MatOfByte(byteData), Imgcodecs.IMREAD_ANYCOLOR | Imgcodecs.IMREAD_ANYDEPTH);
 
             // pyrMeanShiftFiltering operation
             Imgproc.pyrMeanShiftFiltering(src, dst, spatialWindowRadius, colorWindowRadius);
@@ -466,7 +470,7 @@ public class CVCore {
             Mat srcGray = new Mat();
             Mat dst = new Mat();
             // Decode image from input byte array
-            Mat src = Imgcodecs.imdecode(new MatOfByte(byteData), Imgcodecs.IMREAD_UNCHANGED);
+            Mat src = Imgcodecs.imdecode(new MatOfByte(byteData), Imgcodecs.IMREAD_ANYCOLOR | Imgcodecs.IMREAD_ANYDEPTH);
             // Convert the image to Gray
             Imgproc.cvtColor(src, srcGray, Imgproc.COLOR_BGR2GRAY);
 
@@ -492,7 +496,7 @@ public class CVCore {
             Mat srcGray = new Mat();
             Mat dst = new Mat();
             // Decode image from input byte array
-            Mat src = Imgcodecs.imdecode(new MatOfByte(byteData), Imgcodecs.IMREAD_UNCHANGED);
+            Mat src = Imgcodecs.imdecode(new MatOfByte(byteData), Imgcodecs.IMREAD_ANYCOLOR | Imgcodecs.IMREAD_ANYDEPTH);
 
             // Convert the image to Gray
             Imgproc.cvtColor(src, srcGray, Imgproc.COLOR_BGR2GRAY);
@@ -517,7 +521,7 @@ public class CVCore {
         try {
             Mat dst = new Mat();
             // Decode image from input byte array
-            Mat src = Imgcodecs.imdecode(new MatOfByte(byteData), Imgcodecs.IMREAD_UNCHANGED);
+            Mat src = Imgcodecs.imdecode(new MatOfByte(byteData), Imgcodecs.IMREAD_ANYCOLOR | Imgcodecs.IMREAD_ANYDEPTH);
 
             // copyMakeBorder operation
             Core.copyMakeBorder(src, dst, top, bottom, left, right, borderType);
@@ -539,7 +543,7 @@ public class CVCore {
         try {
             Mat dst = new Mat();
             // Decode image from input byte array
-            Mat src = Imgcodecs.imdecode(new MatOfByte(byteData), Imgcodecs.IMREAD_UNCHANGED);
+            Mat src = Imgcodecs.imdecode(new MatOfByte(byteData), Imgcodecs.IMREAD_ANYCOLOR | Imgcodecs.IMREAD_ANYDEPTH);
 
             // Sobel operation
             Imgproc.Sobel(src, dst, depth, dx, dy);
@@ -561,7 +565,7 @@ public class CVCore {
         try {
             Mat dst = new Mat();
             // Decode image from input byte array
-            Mat src = Imgcodecs.imdecode(new MatOfByte(byteData), Imgcodecs.IMREAD_UNCHANGED);
+            Mat src = Imgcodecs.imdecode(new MatOfByte(byteData), Imgcodecs.IMREAD_ANYCOLOR | Imgcodecs.IMREAD_ANYDEPTH);
 
             // Scharr operation
             Imgproc.Scharr(src, dst, depth, dx, dy);
@@ -581,7 +585,7 @@ public class CVCore {
         byte[] byteArray = new byte[0];
         try {
             // Decode image from input byte array
-            Mat src = Imgcodecs.imdecode(new MatOfByte(byteData), Imgcodecs.IMREAD_UNCHANGED);
+            Mat src = Imgcodecs.imdecode(new MatOfByte(byteData), Imgcodecs.IMREAD_ANYCOLOR | Imgcodecs.IMREAD_ANYDEPTH);
             Mat dst0 = new Mat();
             src.convertTo(dst0, CvType.CV_32F);//Mat to be accumulateWeighted must be of type CV_32F
 
@@ -608,7 +612,7 @@ public class CVCore {
         byte[] byteArray = new byte[0];
         try {
             // Decode image from input byte array
-            Mat src = Imgcodecs.imdecode(new MatOfByte(byteData), Imgcodecs.IMREAD_UNCHANGED);
+            Mat src = Imgcodecs.imdecode(new MatOfByte(byteData), Imgcodecs.IMREAD_ANYCOLOR | Imgcodecs.IMREAD_ANYDEPTH);
 
             //gray styled
             Mat grayMat = new Mat();
@@ -684,7 +688,7 @@ public class CVCore {
         try {
             Mat dst = new Mat();
             // Decode image from input byte array
-            Mat src = Imgcodecs.imdecode(new MatOfByte(byteData), Imgcodecs.IMREAD_UNCHANGED);
+            Mat src = Imgcodecs.imdecode(new MatOfByte(byteData), Imgcodecs.IMREAD_ANYCOLOR | Imgcodecs.IMREAD_ANYDEPTH);
 
             // Laplacian operation
             Imgproc.Laplacian(src, dst, depth);
@@ -706,7 +710,7 @@ public class CVCore {
         try {
             Mat dst = new Mat();
             // Decode image from input byte array
-            Mat src = Imgcodecs.imdecode(new MatOfByte(byteData), Imgcodecs.IMREAD_UNCHANGED);
+            Mat src = Imgcodecs.imdecode(new MatOfByte(byteData), Imgcodecs.IMREAD_ANYCOLOR | Imgcodecs.IMREAD_ANYDEPTH);
 
             // Laplacian operation
             Imgproc.Laplacian(src, dst, depth, ksize, scale, delta, borderType);
@@ -728,7 +732,7 @@ public class CVCore {
         try {
             Mat dst = new Mat();
             // Decode image from input byte array
-            Mat src = Imgcodecs.imdecode(new MatOfByte(byteData), Imgcodecs.IMREAD_UNCHANGED);
+            Mat src = Imgcodecs.imdecode(new MatOfByte(byteData), Imgcodecs.IMREAD_ANYCOLOR | Imgcodecs.IMREAD_ANYDEPTH);
 
             // distanceTransform operation
             Imgproc.distanceTransform(src, dst, distanceType, maskSize);
@@ -750,7 +754,7 @@ public class CVCore {
         try {
             Mat dst = new Mat();
             // Decode image from input byte array
-            Mat src = Imgcodecs.imdecode(new MatOfByte(byteData), Imgcodecs.IMREAD_UNCHANGED);
+            Mat src = Imgcodecs.imdecode(new MatOfByte(byteData), Imgcodecs.IMREAD_ANYCOLOR | Imgcodecs.IMREAD_ANYDEPTH);
 
             // Size of the new image
             Size size = new Size((int) outputSize.get(0), (int) outputSize.get(1));
@@ -775,7 +779,7 @@ public class CVCore {
         try {
             Mat dst = new Mat();
             // Decode image from input byte array
-            Mat src = Imgcodecs.imdecode(new MatOfByte(byteData), Imgcodecs.IMREAD_UNCHANGED);
+            Mat src = Imgcodecs.imdecode(new MatOfByte(byteData), Imgcodecs.IMREAD_ANYCOLOR | Imgcodecs.IMREAD_ANYDEPTH);
 
             // resize operation
             Imgproc.applyColorMap(src, dst, colorMap);
@@ -797,7 +801,7 @@ public class CVCore {
         try {
             Mat dst = new Mat();
             // Decode image from input byte array
-            Mat src = Imgcodecs.imdecode(new MatOfByte(byteData), Imgcodecs.IMREAD_UNCHANGED);
+            Mat src = Imgcodecs.imdecode(new MatOfByte(byteData), Imgcodecs.IMREAD_ANYCOLOR | Imgcodecs.IMREAD_ANYDEPTH);
 
             // resize operation
             Imgproc.Canny(src, dst, threshold1, threshold2);
@@ -820,7 +824,7 @@ public class CVCore {
         try {
             Mat cdst = new Mat();
             // Decode image from input byte array
-            Mat src = Imgcodecs.imdecode(new MatOfByte(byteData), Imgcodecs.IMREAD_UNCHANGED);
+            Mat src = Imgcodecs.imdecode(new MatOfByte(byteData), Imgcodecs.IMREAD_ANYCOLOR | Imgcodecs.IMREAD_ANYDEPTH);
             // Check if image is loaded fine
             // Copy edges to the images that will display the results in BGR
             Imgproc.cvtColor(src, cdst, Imgproc.COLOR_GRAY2BGR);
@@ -857,7 +861,7 @@ public class CVCore {
         try {
             Mat cdst = new Mat();
             // Decode image from input byte array
-            Mat src = Imgcodecs.imdecode(new MatOfByte(byteData), Imgcodecs.IMREAD_UNCHANGED);
+            Mat src = Imgcodecs.imdecode(new MatOfByte(byteData), Imgcodecs.IMREAD_ANYCOLOR | Imgcodecs.IMREAD_ANYDEPTH);
             // Check if image is loaded fine
             // Copy edges to the images that will display the results in BGR
             Imgproc.cvtColor(src, cdst, Imgproc.COLOR_GRAY2BGR);
@@ -891,7 +895,7 @@ public class CVCore {
         try {
             Mat circles = new Mat();
             // Decode image from input byte array
-            Mat input = Imgcodecs.imdecode(new MatOfByte(byteData), Imgcodecs.IMREAD_UNCHANGED);
+            Mat input = Imgcodecs.imdecode(new MatOfByte(byteData), Imgcodecs.IMREAD_ANYCOLOR | Imgcodecs.IMREAD_ANYDEPTH);
             // Imgproc.medianBlur(input, input, 5);
             // resize operation
             Imgproc.HoughCircles(input, circles, method, dp, minDist, param1, param2, minRadius, maxRadius);
@@ -935,7 +939,7 @@ public class CVCore {
             for(int i = 0; i<destinationPoints.size(); i++) {
                 t.add((double) ((Integer) destinationPoints.get(i)));
             }
-            Mat input = Imgcodecs.imdecode(new MatOfByte(byteData), Imgcodecs.IMREAD_UNCHANGED);
+            Mat input = Imgcodecs.imdecode(new MatOfByte(byteData), Imgcodecs.IMREAD_ANYCOLOR | Imgcodecs.IMREAD_ANYDEPTH);
             MatOfPoint2f src = new MatOfPoint2f(new Point(s.get(0), s.get(1)),
                     new Point(s.get(2), s.get(3)), new Point(s.get(4), s.get(5)),
                     new Point(s.get(6), s.get(7)));
@@ -966,7 +970,7 @@ public class CVCore {
             Mat background = new Mat();
             Mat foreground = new Mat();
 
-            Mat src = Imgcodecs.imdecode(new MatOfByte(byteData), Imgcodecs.IMREAD_UNCHANGED);
+            Mat src = Imgcodecs.imdecode(new MatOfByte(byteData), Imgcodecs.IMREAD_ANYCOLOR | Imgcodecs.IMREAD_ANYDEPTH);
 
             Rect rect = new Rect(px, px, qx, qy);
 
