@@ -1,6 +1,7 @@
 package com.bocol.opencv4.core;
 
 import android.annotation.SuppressLint;
+import android.graphics.ImageDecoder;
 
 import org.opencv.android.OpenCVLoader;
 import org.opencv.core.Core;
@@ -991,6 +992,54 @@ public class CVCore {
             System.out.println("OpenCV Error: " + e.toString());
         }
         return byteArray;
+    }
+
+    @SuppressLint("MissingPermission")
+    public byte[] boundingImage(byte[] byteData) {
+        byte[] byteArray = new byte[0];
+        try{
+            Mat src = Imgcodecs.imdecode(new MatOfByte(byteData), Imgcodecs.IMREAD_ANYCOLOR | Imgcodecs.IMREAD_ANYDEPTH);
+            Mat dstGray = new Mat();
+            Imgproc.cvtColor(src, dstGray, Imgproc.COLOR_BGR2GRAY);
+            Rect bndingRect = Imgproc.boundingRect(dstGray);
+            Log.d("CVCore======>", "bounding rect is [" + bndingRect.toString() + "]");
+
+            Mat dstCut = new Mat(bndingRect.size(), src.type());
+            Imgproc.getRectSubPix(
+                    src,
+                    bndingRect.size(),
+                    new Point(bndingRect.x+bndingRect.width/2.0, bndingRect.y+ bndingRect.height/2.0),
+                    dstCut
+//                    src.depth()
+            );
+            MatOfByte outByte = new MatOfByte();
+            Imgcodecs.imencode(".png", dstCut, outByte);
+            Log.d("CVCore======>", "outByte size is [" + outByte.size() + "]");
+            byteArray = outByte.toArray();
+        } catch (Exception e) {
+            System.out.println("OpenCV Error: " + e.toString());
+        }
+
+        return byteArray;
+    }
+
+    @SuppressLint("MissingPermission")
+    public List<Integer> boundingRect(byte[] byteData) {
+        List<Integer> list = new ArrayList<Integer>(4);
+        try{
+            Mat src = Imgcodecs.imdecode(new MatOfByte(byteData), Imgcodecs.IMREAD_ANYCOLOR | Imgcodecs.IMREAD_ANYDEPTH);
+            Mat dstGray = new Mat();
+            Imgproc.cvtColor(src, dstGray, Imgproc.COLOR_BGR2GRAY);
+            Rect bndingRect = Imgproc.boundingRect(dstGray);
+            Log.d("CVCore======>", "bounding rect is [" + bndingRect.toString() + "]");
+            list.add(bndingRect.x);
+            list.add(bndingRect.y);
+            list.add(bndingRect.width);
+            list.add(bndingRect.height);
+        } catch (Exception e) {
+            System.out.println("OpenCV Error: " + e.toString());
+        }
+        return list;
     }
 
     @SuppressLint("MissingPermission")

@@ -215,6 +215,12 @@ public class OpenCV4Plugin implements FlutterPlugin, MethodCallHandler {
         result.success(core.warpPerspectiveTransform((byte[]) call.argument("byteData"),
                 (ArrayList) call.argument("sourcePoints"), (ArrayList) call.argument("destinationPoints"), (ArrayList) call.argument("outputSize") ));
         break;
+      case "boundingImage":
+        result.success(core.boundingImage((byte[]) call.argument("byteData")));
+        break;
+      case "boundingRect":
+        result.success(core.boundingRect((byte[]) call.argument("byteData")));
+        break;
       default:
         result.notImplemented();
         break;

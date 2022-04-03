@@ -1015,4 +1015,27 @@ class ImgProc {
     /// Function returns the set String as result, use for debugging
     return result;
   }
+
+  static Future<dynamic> boundingImage(Uint8List byteData) async {
+    final dynamic result = await _channel.invokeMethod('boundingImage', {
+      'byteData': byteData,
+    });
+    return result;
+  }
+
+  static Future<dynamic> boundingRect(Uint8List byteData) async {
+    final dynamic result = await _channel.invokeMethod('boundingRect', {
+      'byteData': byteData,
+    });
+    if(result.length > 3) {
+      Rect rect = Rect.fromLTWH(
+        (result[0] as int).toDouble(),
+        (result[1] as int).toDouble(),
+        (result[2] as int).toDouble(),
+        (result[3] as int).toDouble(),
+      );
+      return rect;
+    }
+    return Rect.largest;
+  }
 }
